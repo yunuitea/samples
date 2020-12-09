@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<link rel="stylesheet" th:href="@{/webjars/bootstrap/4.5.2/css/bootstrap.min.css}">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		
+		<script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+	    <script th:src="@{/webjars/bootstrap/4.5.2/js/bootstrap.min.js}"></script>
+		
+		<style>
+			.login-form {
+				width: 100%; 
+				height: 100vh; 
+				display: -webkit-box; 
+				display: -ms-flexbox; 
+				display: flex; 
+				-webkit-box-align: center; 
+				-ms-flex-align: center; 
+				align-items: center; 
+				-webkit-box-pack: center; 
+				-ms-flex-pack: center; 
+				justify-content: center;
+		  		font-size: 15px;
+			}
+			
+			.login-form form {
+			    margin-bottom: 15px;
+			    border-color:#000000;
+			    border: solid 1px;
+			    width:500px;
+			    height:350px;
+			    padding: 10px;
+			}
+			.login-form h2 {
+			    margin: 0 0 15px;
+			}
+			.form-control, .btn {
+			    min-height: 38px;
+			    border-radius: 2px;
+			}
+			.btn {        
+			    font-size: 15px;
+			    font-weight: bold;
+			}
+	
+		</style>
+	</head>
+	<body>
+	  <div class="container">
+	     <div class="login-form">
+		    <form  method="post" action="/login/proc/login"  id="loginFrm">
+		       <div class="row justify-content-center" style="margin: 25px auto">
+	          	 <h2 class="text-center">ログイン</h2>  
+	           </div>     
+	           <div class="form-group">
+	             <div class="row  justify-content-center">
+	                 <div class="col-3" style="padding-top: 5px;font-weight: bold;">
+	               	    <span style="font-weight: bold;"> アカウント</span>
+	                 </div>
+		             <div class="col-8"> 
+		                <input type="text" class="form-control"  id="account_id"  name ="account_id"
+		                   style="background-color: #EEEEEE" placeholder=""  maxlength="20"
+		                   required="required" >
+		             </div>
+	             </div>
+	           </div>
+	           <div class="form-group">
+		         <div class="row  justify-content-center">
+		           <div class="col-3" style="padding-top: 5px;font-weight: bold;">
+		              <span style="font-size: 16px">パスワード</span>
+		           </div>
+		           <div class="col-8"> 
+		              <input type="text"  id="account_pw" name="account_pw"  class="form-control"  maxlength="32"
+		                  style="background-color: #EEEEEE" placeholder="" required="required">
+		           </div>
+		         </div>
+	           </div>
+	           <div class="row  justify-content-center">
+	              <button type="button" class="btn btn-primary" onclick="goLogin();"  style="margin: 10px auto;width:150px">サインイン </button>
+	           </div>
+	           <div class="row  justify-content-center" style="margin: 20px auto">
+	              <a href="#">パスワードをお忘れの方はこちらへ?</a>
+	          </div>        
+	       </form>
+	    </div>
+	  </div>
+	</body>
+	<script type="text/javascript">
+	
+	
+	  //아이디 검사 - 영문 + 숫자만 가능 최소길이 4
+	  function validAccount()  {
+		  
+		  var rexg = /^[A-Za-z0-9+]*$/; // 정규식  대문자 / 소문자/숫자 
+		  var account = $('#account_id').val();
+		  
+		  if(account.length < 4) {
+			  alert('패스워드의 최소길이는 4자 이상입니다.');
+			  return false;
+		  }
+		  
+		  
+		  if(rexg.test(account)) {
+			 return true;
+		  }else {
+			  alert('아이디는 영문과 숫자만 입력 가능합니다.');
+			  return false;
+		  }
+		  
+	  }
+	  
+	  
+	  function validPassword() {
+		  var regx = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+		  var passwd = $('#account_pw').val();
+		  
+		  if(passwd.length < 8) {
+			  alert('패스워드의 최소길이는 8자 이상입니다.');
+			  return false;
+		  }
+		  
+		  
+		  if(passwd.match(regx)) {
+			 return true;
+		  }else {
+			  alert('패스워드는 영문과 숫자 , 대문자 한글자 이상 포함되어야 합니다.');
+			  return false;
+		  }
+		  
+	  }
+	  
+	  function goLogin () {
+		  var frm = $('#loginFrm');
+		   if(validAccount()) {
+			  if(validPassword()) {
+				  frm.submit();
+			  }			  
+		  }
+	  }
+	
+	</script>
+</html>

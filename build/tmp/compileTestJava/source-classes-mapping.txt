@@ -1,0 +1,2 @@
+com/example/samples/SamplesApplicationTests.java
+ com.example.samples.SamplesApplicationTests

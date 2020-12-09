@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Bootstrap Simple Login Form</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<style>
+.login-form {
+  	font-size: 15px;
+}
+.login-form form {
+    margin-bottom: 15px;
+    padding: 30px;
+}
+.login-form h2 {
+    margin: 0 0 15px;
+}
+.form-control, .btn {
+    min-height: 38px;
+    border-radius: 2px;
+}
+.btn {        
+    font-size: 20px;
+    font-weight : bold;
+}
+.form-group, .text-center{
+	text-align : center;
+}
+#msg{
+	font-size : 20px;
+	font-weight : bold;
+}
+</style>
+<script type="text/javascript">
+    function goLogout () {
+        location.href = '/login/loginForm';
+    }
+
+    function modifyBook(bookNo) {
+        location.href ="/book/modify?bookNo="  + bookNo;
+    }
+
+    function deleteBook (bookNo) {
+        var isConfirm = confirm('削除しますか？');
+
+        if(isConfirm) {
+            location.href ="/book/delete?bookNo=" + bookNo;
+        }else{
+            return false;
+        }
+    }
+
+    function registerBook() {
+        location.href = '/book/registerForm';
+    }
+</script>
+</head>
+<body>
+<div class="container">
+    <div class="login-form">
+        <form  method="post" action=""  id="loginFrm">
+            <div class="row justify-content-end" style="padding-right: 10px">
+                <span style="margin-top: 7px; margin-right: 5px"><span style="font-weight: bold;">admin</span>様がログイン中です</span>
+                <button type="button" class="btn btn-danger" onclick="goLogout();">サインアウト </button>
+            </div>
+            <div class="justify-content-lg-start" style="margin-top: 50px;margin-left: 10px">
+                <span><h2  style="font-weight: 600">本一覧</h2></span>
+            </div>
+            <div style="width: 100%;">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col" style="text-align: center">タイトル </th>
+                        <th scope="col" style="text-align: center">著者</th>
+                        <th scope="col" style="text-align: center">出版社</th>
+                        <th scope="col" style="text-align: center">発売日</th>
+                        <th scope="col" style="text-align: center">値段</th>
+                        <th scope="col" style="text-align: center"></th>
+                    </tr>
+                    </thead>
+                    <tbody >
+                    <tr th:each="book, status :${bookList}">
+                        <td>
+                            <a href="#" th:onclick="modifyBook([[${book.bookNo}]])">
+                                <div style="width : 230px; overflow : hidden; text-overflow: ellipsis; white-space: nowrap;"  th:text="${book.title}"  ></div>
+                            </a>
+                        </td>
+                        <td th:text="${book.author}" style="text-align : center;" ></td>
+                        <td th:text="${book.publisher}"style="text-align : center;"></td>
+                        <td th:text="${book.regDate}"style="text-align : center;"></td>
+                        <td th:text="${#numbers.formatDecimal(book.price, 0, 'COMMA', 0, 'POINT') + ' 円'}" style="text-align : right;"></td>
+                        <td>
+                            <button type="button" class="btn btn-danger" th:onclick="deleteBook([[${book.bookNo}]])">削除</button>
+                        </td>
+                    </tr>
+                    <tr th:if="${bookSize == 0}">
+                        <td colspan="5" scope="row">
+                            <span style="color: red">登録された本がありません</span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row justify-content-end" style="margin-right: 30px;margin-top: 20px">
+                <button type="button" class="btn btn-primary" onclick="registerBook();"  style="width:150px">登録</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

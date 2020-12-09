@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.samples.dao.BooksMapper">
+
+  <insert id="registerBook" parameterType="com.example.samples.vo.BookInfo"  >
+  
+  		INSERT INTO books(title, publisher, author, price, reg_date)
+  		 values(#{title}, #{publisher}, #{author}, #{price}, #{regDate})
+
+  </insert>
+
+
+
+</mapper>

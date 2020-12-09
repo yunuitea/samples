@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.samples.dao.BooksMapper">
+
+      <insert id="registerBook" parameterType="com.example.samples.vo.BookInfo">
+
+            INSERT INTO books(title, publisher, author, price, reg_date)
+             values(#{title}, #{publisher}, #{author}, #{price}, #{regDate});
+
+      </insert>
+
+      <select id ="getBookList"  parameterType="java.util.Map"   resultType="com.example.samples.vo.BookInfo">
+            select book_no as bookNo,
+                   title,
+                   publisher,
+                   author,
+                   price,
+                   date_format(reg_date, '%Y年%m月%d日') as regDate
+            FROM books
+            ORDER BY title DESC
+      </select>
+
+      <select id ="getBook"  parameterType="java.util.Map"   resultType="com.example.samples.vo.BookInfo">
+            SELECT book_no as bookNo,
+                   title,
+                   publisher,
+                   author,
+                   price,
+                   date_format(reg_date, '%Y/%m/%d') as regDate
+            FROM books
+            WHERE book_no = #{bookNo}
+      </select>
+
+    <update id="updateBook" parameterType="com.example.samples.vo.BookInfo">
+
+         UPDATE books
+         SET  author = #{author}
+             , price = #{price}
+             , title = #{title}
+        <if test="publisher != null and publisher neq ''">
+            , publisher = #{publisher}
+        </if>
+        <if test="regDate != null and regDate neq ''">
+            , reg_date = #{regDate}
+        </if>
+        WHERE  book_no = #{bookNo}
+
+    </update>
+
+    <delete id="deleteBook"  parameterType="java.util.Map">
+        DELETE FROM  books   WHERE  book_no = #{bookNo}
+    </delete>
+
+</mapper>

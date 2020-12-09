@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Bootstrap Simple Login success</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<style>
+.login-form {
+	border : 1px solid black;
+    width: 60%;
+    margin: 50px auto;
+  	font-size: 15px;
+}
+.login-form form {
+    margin-bottom: 15px;
+    padding: 30px;
+}
+.login-form h2 {
+    margin: 0 0 15px;
+}
+.form-control, .btn {
+    min-height: 38px;
+    border-radius: 2px;
+}
+.btn {        
+    font-size: 20px;
+    font-weight : bold;
+}
+.form-group, .text-center{
+	text-align : center;
+}
+#msg{
+	font-size : 20px;
+	font-weight : bold;
+}
+		</style>
+	</head>
+	<body>
+	  <div class="container">
+	     <div class="login-form">
+		    <form  method="post" action="/book/update"  id="modifyFrm">
+				<input type="hidden" name="bookNo" id="bookNo" th:value="${book.bookNo}">
+				<div class="row justify-content-end" style="padding-right: 10px">
+					<span style="margin-top: 7px;margin-right: 5px"><span style="font-weight: bold;">アカウント名</span>様がログイン中です</span>
+					<button type="button" class="btn btn-danger" onclick="goLogout();">サインアウト </button>
+				</div>
+		       <div class="row" style="margin: 25px auto 0px">
+	          	 <h2 class="text-left">本の登録</h2>  
+	           </div>     
+	           <hr></hr>
+	           <div class="form-group">
+	             <div class="row  justify-content-center">
+	                 <div class="col-3" style="padding-top: 5px;font-weight: bold;">
+	               	    <span style="font-weight: bold;color:red;">*</span><span style="font-weight: bold;">タイトル</span>
+	                 </div>
+		             <div class="col-5"> 
+		                <input type="text" class="form-control"  id="title"  name ="title"
+		                   maxlength="100"  required="required"  th:value="${book.title}">
+		             </div>
+	             </div>
+	           </div>
+	           <div class="form-group">
+	             <div class="row  justify-content-center">
+	                 <div class="col-3" style="padding-top: 5px;font-weight: bold;">
+	               	    <span style="font-weight: bold;color:red;">*</span><span style="font-weight: bold;">著者</span>
+	                 </div>
+		             <div class="col-5"> 
+		                <input type="text" class="form-control"  id="author"  name ="author"
+		                     maxlength="50"  required="required" th:value="${book.author}" >
+		             </div>
+	             </div>
+	           </div>
+	            <div class="form-group">
+	             <div class="row  justify-content-center">
+	                 <div class="col-3" style="padding-top: 5px;font-weight: bold;">
+	               	    <span style="font-weight: bold;">出版社</span>
+	                 </div>
+		             <div class="col-5"> 
+		                <input type="text" class="form-control"  id="publisher"  name ="publisher"  th:value="${book.publisher}" maxlength="50">
+		             </div>
+	             </div>
+	           </div>
+	            <div class="form-group">
+	             <div class="row  justify-content-center">
+	                 <div class="col-3" style="padding-top: 5px;font-weight: bold;">
+	               	    <span style="font-weight: bold;">発売日</span>
+	                 </div>
+		             <div class="col-5"> 
+		                <input type="text" class="form-control"  id="regDate"  name ="regDate"  maxlength="20"   th:value="${book.regDate}" >
+		             </div>
+	             </div>
+	           </div>
+	            <div class="form-group">
+	             <div class="row  justify-content-center">
+	                 <div class="col-3" style="padding-top: 5px;font-weight: bold;">
+	               	    <span style="font-weight: bold;color:red;">*</span><span style="font-weight: bold;">価額</span>
+	                 </div>
+		             <div class="col-5"> 
+		                <input type="number" class="form-control"  id="price"  name ="price"  maxlength="20"   th:value="${book.price}">
+		             </div>
+	             </div>
+	           </div>
+	           <div class="row  justify-content-center" style="padding-top:15px;">
+	               <div class="col-3">
+	                  <button type="button" class="btn btn-primary" onclick="register();"  style="margin: 10px auto;width:100px">登録</button>
+	               </div>
+	              <div class="col-3">
+	                  <button type="button" class="btn btn-secondary" onclick="goList();"  style="margin: 10px auto;width:100px">戻る</button>
+	               </div>
+	           </div>
+
+	       </form>
+	    </div>
+	  </div>
+	</body>
+	<script type="text/javascript">
+	
+		function register() {
+			var frm = $('#modifyFrm');
+			
+			if(validation()){
+				frm.submit();
+			}
+			
+		}
+		
+		function validation() {
+			var title =   $('#title').val(); 
+			var author =  $('#author').val();
+			var price  =  $('#price').val();
+			if($.trim(title).length == 0 ) {
+				alert('本のタイトルを入力してください。');
+				return false;
+			}else if($.trim(title).length > 100 ) {
+				alert('本のタイトルは最大100文字まで入力してください。');
+				return  false;
+			}
+			if($.trim(author).length == 0 ) {
+				alert('本の著者を入力してください。');
+				return false;
+			}else if($.trim(title).length > 50 ) {
+				alert('本の著者は最大50文字まで入力してください。');
+				return false;
+			}
+			
+			
+			if($.trim(price).length == 0 ) {
+				alert('本の価額を入力してください。.');
+				return false;
+			}else if(price　< 0 ) {
+				alert('正しい本の価額を入力してください。');
+				return false;
+			}
+			
+			
+			return true;
+		}
+		
+		function goLogout () {
+			location.href = '/login/loginForm';
+		}
+
+		function goList() {
+			location.href = '/book/list';
+		}
+
+	</script>
+</html>
