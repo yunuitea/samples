@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Bootstrap Simple Login success</title>
+<title>Bootstrap Simple Login Form</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -37,47 +37,46 @@
 #msg{
 	font-size : 20px;
 	font-weight : bold;
-	text-align : center;
 }
 </style>
-	<script type="text/javascript">
-		function goLogout () {
-			  location.href = '/login/loginForm';
-		}
-		
-		
-		function registerBook() {
-			 location.href = '/book/registerForm';
-		}
-		
-	</script>
+<script type="text/javascript">
+	function goLogout () {
+		  location.href = '/login/loginForm';
+	}
+	
+	
+	function registerBook() {
+		 location.href = '/book/registerForm';
+	}
+	
+</script>
 </head>
-	<body>
-	  <div class="container">
-	     <div class="login-form">
-		    <form  method="post" action=""  id="loginFrm">
-		       <div class="row justify-content-center" style="margin: 25px auto">
-	          	 <h2 class="text-center"><span style="font-weight: bold;">ログイン成功</span></h2>
-	           </div>     
-	           <div class="form-group">
-	             <div class="row  justify-content-center">
-		             <div class="col-12" style="text-align: center"> 
-		     			<span style="font-size: 20px"><span style="font-weight: bold;">admin</span>様がログイン中です</span>
-		             </div>
+<body>
+  <div class="container">
+     <div class="login-form">
+	    <form  method="post" action=""  id="loginFrm">
+	       <div class="row justify-content-center" style="margin: 25px auto">
+          	 <h2 class="text-center"><span style="font-weight: bold;">ログイン成功</span></h2>
+           </div>     
+           <div class="form-group">
+             <div class="row  justify-content-center">
+	             <div class="col-12" style="text-align: center"> 
+	     			<span style="font-size: 20px"><span style="font-weight: bold;">アカウント名</span>様がログイン中です</span>
 	             </div>
-	           </div>
-	           <div class="row  justify-content-center">
-		             <div class="col-12" style="text-align: center"> 
-		     			<button type="button" class="btn btn-primary" onclick="registerBook();"  style="margin: 10px auto;width:150px">登録</button>
-		             </div>
+             </div>
+           </div>
+           <div class="row  justify-content-center">
+	             <div class="col-12" style="text-align: center"> 
+	     			<button type="button" class="btn btn-primary" onclick="registerBook();"  style="margin: 10px auto;width:150px">登録</button>
+	             </div>
+            </div>
+            <div class="row  justify-content-center">
+	            <div class="col-12" style="text-align: center"> 
+	     			<button type="button" class="btn btn-danger" onclick="goLogout();"  style="margin: 10px auto;width:150px">サインアウト </button>
 	            </div>
-	            <div class="row  justify-content-center">
-		            <div class="col-12" style="text-align: center"> 
-		     			<button type="button" class="btn btn-danger" onclick="goLogout();"  style="margin: 10px auto;width:150px">サインアウト </button>
-		            </div>
-	            </div>
-	       </form>
-	    </div>
-	  </div>
-	</body>
+            </div>
+       </form>
+    </div>
+  </div>
+</body>
 </html>

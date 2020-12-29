@@ -16,18 +16,21 @@
                    publisher,
                    author,
                    price,
-                   date_format(reg_date, '%Y年%m月%d日') as regDate
+                  date_format(reg_date, '%Y年%m月%d日') as regDate
             FROM books
+            <if test="searchText != null">W
+               WHERE title like  concat('%', #{searchText} , '%')
+            </if>
             ORDER BY title DESC
       </select>
 
-      <select id ="getBook"  parameterType="java.util.Map"   resultType="com.example.samples.vo.BookInfo">
+      <select id ="getBook"  parameterType="int"   resultType="com.example.samples.vo.BookInfo">
             SELECT book_no as bookNo,
                    title,
                    publisher,
                    author,
                    price,
-                   date_format(reg_date, '%Y/%m/%d') as regDate
+                   reg_date as regDate
             FROM books
             WHERE book_no = #{bookNo}
       </select>
@@ -42,13 +45,13 @@
             , publisher = #{publisher}
         </if>
         <if test="regDate != null and regDate neq ''">
-            , reg_date = #{regDate}
+            , reg_date = date_format(#{regDate}, '%Y-%m-%d')
         </if>
         WHERE  book_no = #{bookNo}
 
     </update>
 
-    <delete id="deleteBook"  parameterType="java.util.Map">
+    <delete id="deleteBook"  parameterType="int">
         DELETE FROM  books   WHERE  book_no = #{bookNo}
     </delete>
 

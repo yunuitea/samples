@@ -11,7 +11,7 @@ public class LoginViewController {
 	
 	private String id = "admin";
 	private String pw = "Admin1234";
-
+	
 	@RequestMapping(value="/loginForm")
 	public ModelAndView loginForm() {
 		ModelAndView view = new ModelAndView();
@@ -26,7 +26,6 @@ public class LoginViewController {
 		return view;
 	}
 	
-
 	@RequestMapping(value="/proc/login")
 	public String loginProc(@RequestParam(value = "account_id") String accountId,
 			                             @RequestParam(value = "account_pw") String accountPw) {

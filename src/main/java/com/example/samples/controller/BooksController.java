@@ -31,13 +31,18 @@ public class BooksController {
 
 
 	@RequestMapping(value="/list")
-	public ModelAndView bookList() {
+	public ModelAndView bookList(@RequestParam(value = "searchText", required = false) String searchText) {
 		ModelAndView view = new ModelAndView();
 
 		List<BookInfo> bookInfoList = null;
 		Map<String, Object> param = new HashMap<>();
 
 		try {
+
+			if(searchText !=null && searchText.length()  > 0) {
+				param.put("searchText", searchText);
+			}
+
 			bookInfoList = service.getBookList(param);
 
 			if(bookInfoList != null) {
@@ -75,6 +80,7 @@ public class BooksController {
 			}
 			
 		}catch (Exception e) {
+			System.out.println("Error!! :" + e.getMessage());
 			view.setViewName("book/registerError");
 		}
 		
@@ -94,6 +100,7 @@ public class BooksController {
 			vo = service.getBook(Integer.parseInt(bookNo));
 
 		}catch (Exception e) {
+			System.out.println("Error!! :" + e.getMessage());
 		}
 
 		view.addObject("book", vo);
@@ -117,6 +124,7 @@ public class BooksController {
 			}
 
 		}catch (Exception e) {
+			System.out.println("Error!! :" + e.getMessage());
 			view.setViewName("book/registerError");
 		}
 		return view;
@@ -135,12 +143,13 @@ public class BooksController {
 
 			resultCode = service.deleteBook(Integer.parseInt(bookNo));
 			if(resultCode > 0) {
-				view.setViewName("book/registerDone");
+				view.setViewName("book/deleteDone");
 			}else {
 				throw new Exception("insert Error");
 			}
 
 		}catch (Exception e) {
+			System.out.println("Error!! :" + e.getMessage());
 			view.setViewName("book/registerError");
 		}
 		return view;

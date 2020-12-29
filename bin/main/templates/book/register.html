@@ -38,68 +38,73 @@
 	font-size : 20px;
 	font-weight : bold;
 }
-		</style>
-			<script type="text/javascript">
-		
+</style>
+<script type="text/javascript">
 	function back(){
-			location.href = '/book/list'
+		location.href = '/book/list'
+	}
+	
+	function register() {
+		var frm = $('#registerFrm');
+		
+		if(validation()){
+			frm.submit();
 		}
 		
-		function register() {
-			var frm = $('#registerFrm');
-			
-			if(validation()){
-				frm.submit();
-			}
-			
+	}
+	function validation() {
+		var title =   $('#title').val(); 
+		var author =  $('#author').val();
+		var price  =  $('#price').val();
+		if($.trim(title).length == 0 ) {
+			alert('本のタイトルを入力してください。');
+			return false;
+		}else if($.trim(title).length > 100 ) {
+			alert('本のタイトルは最大100文字まで入力してください。');
+			return  false;
 		}
-		function validation() {
-			var title =   $('#title').val(); 
-			var author =  $('#author').val();
-			var price  =  $('#price').val();
-			if($.trim(title).length == 0 ) {
-				alert('本のタイトルを入力してください。');
-				return false;
-			}else if($.trim(title).length > 100 ) {
-				alert('本のタイトルは最大100文字まで入力してください。');
-				return  false;
-			}
-			if($.trim(author).length == 0 ) {
-				alert('本の著者を入力してください。');
-				return false;
-			}else if($.trim(title).length > 50 ) {
-				alert('本の著者は最大50文字まで入力してください。');
-				return false;
-			}
-			
-			
-			if($.trim(price).length == 0 ) {
-				alert('本の価額を入力してください。.');
-				return false;
-			}else if(price　< 0 ) {
-				alert('正しい本の価額を入力してください。');
-				return false;
-			}
-			
-			
-			return true;
+		if($.trim(author).length == 0 ) {
+			alert('本の著者を入力してください。');
+			return false;
+		}else if($.trim(title).length > 50 ) {
+			alert('本の著者は最大50文字まで入力してください。');
+			return false;
 		}
 		
-		function goLogout () {
-			location.href = '/login/loginForm';
+		
+		if($.trim(price).length == 0 ) {
+			alert('本の価額を入力してください。.');
+			return false;
+		}else if(price　< 0 ) {
+			alert('正しい本の価額を入力してください。');
+			return false;
 		}
+		return true;
+	}
+	
+	function goLogout () {
+		location.href = '/login/loginForm';
+	}
 
-		function goList() {
-			location.href = '/book/list';
+	function goList() {
+		location.href = '/book/list';
+	}
+	function maxLengthCheck(object){
+		if (object.value.length > object.maxLength){
+			object.value = object.value.slice(0, object.maxLength);
 		}
-
-	</script>
+	}
+</script>
 	</head>
 	<body>
 	  <div class="container">
 	     <div class="login-form">
 		    <form  method="post" action="/book/register"  id="registerFrm">
-		       <div >
+				<div class="row justify-content-end" style="padding-right: 10px">
+					<span style="margin-top: 7px;margin-right: 5px"><span style="font-weight: bold;">admin</span>様がログイン中です</span>
+					<button type="button" class="btn btn-danger" onclick="goLogout();">サインアウト </button>
+				</div>
+		       <div class="row" style="margin: 25px auto 0px">
 	          	 <h2 class="text-left">本の登録</h2>  
 	           </div>     
 	           <hr></hr>
@@ -110,7 +115,7 @@
 	                 </div>
 		             <div class="col-5"> 
 		                <input type="text" class="form-control"  id="title"  name ="title"
-		                   placeholder=""  maxlength="100"  required="required" >
+		                   placeholder="最大100文字まで"  maxlength="100"  required="required" >
 		             </div>
 	             </div>
 	           </div>
@@ -121,7 +126,7 @@
 	                 </div>
 		             <div class="col-5"> 
 		                <input type="text" class="form-control"  id="author"  name ="author"
-		                   placeholder=""  maxlength="50"  required="required" >
+		                   placeholder="最大50文字まで"  maxlength="50"  required="required" >
 		             </div>
 	             </div>
 	           </div>
@@ -131,7 +136,7 @@
 	               	    <span style="font-weight: bold;">出版社</span>
 	                 </div>
 		             <div class="col-5"> 
-		                <input type="text" class="form-control"  id="publisher"  name ="publisher" placeholder=""  maxlength="50">
+		                <input type="text" class="form-control"  id="publisher"  name ="publisher" placeholder="最大50文字まで"  maxlength="50">
 		             </div>
 	             </div>
 	           </div>
@@ -141,7 +146,7 @@
 	               	    <span style="font-weight: bold;">発売日</span>
 	                 </div>
 		             <div class="col-5"> 
-		                <input type="text" class="form-control"  id="regDate"  name ="regDate"  placeholder=""  maxlength="20"   >
+		                <input type="text" class="form-control"  id="regDate"  name ="regDate"  placeholder="yyyy/M/d"  maxlength="20"   >
 		             </div>
 	             </div>
 	           </div>
@@ -151,18 +156,20 @@
 	               	    <span style="font-weight: bold;color:red;">*</span><span style="font-weight: bold;">価額</span>
 	                 </div>
 		             <div class="col-5"> 
-		                <input type="number" class="form-control"  id="price"  name ="price"  placeholder=""  maxlength="20"   >
+		                <input type="number" class="form-control"  id="price"  name ="price"
+							   placeholder="半角数字で入力"  maxlength="8"  oninput="maxLengthCheck(this)"  >
 		             </div>
 	             </div>
 	           </div>
-	           <div class="row  justify-content-center">
+	           <div class="row  justify-content-center" style="padding-top:15px;">
 	               <div class="col-3">
-	                  <button type="button" class="btn btn-primary" onclick="register();"  style="margin: 10px;width:100px">登録</button>
+	                  <button type="button" class="btn btn-primary" onclick="register();"  style="margin: 10px auto;width:100px">登録</button>
 	               </div>
 	              <div class="col-3">
-	                  <button type="button" class="btn btn-secondary" onclick="back();"  style="margin: 10px;width:100px">戻る</button>
+	                  <button type="button" class="btn btn-secondary" onclick="goList();"  style="margin: 10px auto;width:100px">戻る</button>
 	               </div>
 	           </div>
+
 	       </form>
 	    </div>
 	  </div>

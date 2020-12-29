@@ -8,7 +8,6 @@ import com.example.samples.vo.BookInfo;
 import java.util.List;
 import java.util.Map;
 
-
 @Repository
 @Mapper
 public interface BooksMapper {
