@@ -82,7 +82,7 @@
            </div>
            <div class="col-6 col-xl-6 col-lg-6" style="margin-top: 5px">
                <div class="pull-right" >
-                   <input type="text" id="searchText" name="searchText" style="width: 250px;height: 35px" placeholder="">
+                   <input type="text" id="searchText" name="searchText" style="width: 250px;height: 35px" placeholder="" th:value = '${searchText}'>
                    <button type="button" class="btn btn-primary btn-sm" onclick="searchBtn();" style="width:70px;margin-bottom: 2px">検索</button>
                </div>
            </div>
@@ -116,7 +116,7 @@
                </tr>
                <tr th:if="${bookSize == 0}">
                    <td colspan="5" scope="row">
-                       <span style="color: red">登録された本がありません</span>
+                       <span style="color: red">検索された本がありません</span>
                    </td>
                </tr>
                </tbody>

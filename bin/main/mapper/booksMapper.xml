@@ -9,7 +9,7 @@
              values(#{title}, #{publisher}, #{author}, #{price}, #{regDate});
 
       </insert>
-
+                                                
       <select id ="getBookList"  parameterType="java.util.Map"   resultType="com.example.samples.vo.BookInfo">
             select book_no as bookNo,
                    title,
@@ -19,9 +19,9 @@
                   date_format(reg_date, '%Y年%m月%d日') as regDate
             FROM books
             <if test="searchText != null">W
-               WHERE title like  concat('%', #{searchText} , '%')
+               WHERE title like  concat('%#', #{searchText} , '%') escape '#'
             </if>
-            ORDER BY title DESC
+            ORDER BY title ASC
       </select>
 
       <select id ="getBook"  parameterType="int"   resultType="com.example.samples.vo.BookInfo">

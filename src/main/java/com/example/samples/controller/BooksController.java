@@ -36,11 +36,12 @@ public class BooksController {
 
 		List<BookInfo> bookInfoList = null;
 		Map<String, Object> param = new HashMap<>();
-
+		
 		try {
 
 			if(searchText !=null && searchText.length()  > 0) {
 				param.put("searchText", searchText);
+				view.addObject("searchText", searchText);
 			}
 
 			bookInfoList = service.getBookList(param);
@@ -58,10 +59,16 @@ public class BooksController {
 			view.addObject("bookSize", 0);
 			view.addObject("bookList", new ArrayList<BookInfo>());
 		}
+		
+		if(searchText != null) {
+			view.addObject("searchText", searchText);
+		}
 
 		view.setViewName("book/bookList");
 		return view;
 	}
+	
+
 	
 	@RequestMapping(value = "/register")
 	public ModelAndView registerBook(BookInfo info)  {
@@ -70,7 +77,6 @@ public class BooksController {
 		int resultCode =0;
 		
 		try {
-			
 			resultCode = service.registerBook(info);
 			
 			if(resultCode > 0) {
